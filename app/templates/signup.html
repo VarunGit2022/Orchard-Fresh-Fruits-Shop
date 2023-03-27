@@ -1,0 +1,27 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block body %}
+<style>
+    .bg{
+
+    }
+</style>
+<div class="col-sm-12">
+    <h3 class="alert alert-danger my-3 text-center">Signup Page</h3>
+    {% if messages %}
+        {% for message in messages %}
+            <p class="alert alert-success">{{message}}<p>
+        {% endfor %}
+    {% endif %}
+
+    <form action="" method="post" novalidate class="text-center ">
+        {% csrf_token %}
+        {% for fm in form %}
+        <div class="form-group">
+            {{fm.label_tag}} <br>{{fm}} <small class="text-warning">{{fm.error|striptags}}</small>
+        </div>
+        {% endfor %}</br>
+     <input type="submit" value="Sign Up" class="btn btn-primary">
+    </form><br>
+</div>
+{% endblock %}

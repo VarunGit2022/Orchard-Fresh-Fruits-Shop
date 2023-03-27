@@ -1,0 +1,47 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block body %}
+
+  <!-- shop section -->
+
+  <section class="shop_section layout_padding">
+    <div class="container">
+      <div class="box">
+        <div class="detail-box">
+          <h2>
+            Fruit shop
+          </h2>
+          <p>
+            There are many variations of Fruits
+          </p>
+        </div>
+        <div class="img-box">
+          <img src="{% static 'images/shop-img.jpg' %}" alt="">
+        </div>
+        <div class="img-box">
+          <img src="{% static 'images/home-exp.png' %}" alt="">
+        </div><br>
+        
+        <h2>
+          <strong>SHOP BY CATEGORY</strong> 
+        </h2><br>
+        <div class="container-fluid">
+          <div class="fruit_container">
+             {% for i in fruits %}
+            <div class="box">
+              <img src="{{i.image.url}}" alt="">
+              <div class="link_box">
+                <h5>
+                  {{i.name}}
+                </h5>
+                <a href="{% url 'detail' i.id %}">
+                  Buy Now
+                </a>
+              </div><br>
+            </div>
+            {% endfor %}
+          </div>
+        </div>
+  </section><br>
+  
+  {% endblock %}
