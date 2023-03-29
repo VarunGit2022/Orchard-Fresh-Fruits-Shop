@@ -22,17 +22,12 @@
                         <tbody>
                                 <tr>
                                     <td scope="col"></td>
-                                    <td>
-                                        <img src="{{cart.fruits.image.url}}" height="150" width="210"><br><br>
+                                    <td><img src="{{cart.fruits.image.url}}" height="100" width="210"><br><br>
                                         <button type="submit" class="bg-dark text-light remove-cart" pid="{{cart.fruits.id}}">Remove</button>
-                                        <button type="submit" class="bg-dark text-light save-for-later" pid="{{cart.fruits.id}}">Save For Later</button>
-                                    </td>
-    
+                                        <button type="submit" class="bg-dark text-light save-cart" pid="{{cart.fruits.id}}">Save For Later</button></td>
                                     <td>{{cart.fruits.name}}</td>
-                                    <td><a class="minus-cart btn" type="submit" pid="{{cart.fruits.id}}">
-                                        <i class="fas fa-minus-square"></i></a>
-                                        {{cart.quantity}} Kg <a class="plus-cart btn"  type="submit" pid="{{cart.fruits.id}}">
-                                            <i class="fas fa-plus-square"></i></a></td>
+                                    <td><a class="minus-cart btn" type="submit" pid="{{cart.fruits.id}}"><i class="fas fa-minus-square"></i></a>
+                                        {{cart.quantity}} Kg <a class="plus-cart btn"  type="submit" pid="{{cart.fruits.id}}"><i class="fas fa-plus-square"></i></a></td>
                                     <td>{{cart.fruits.price_per_kg}}</td>
                                 </tr>
                         </tbody>
@@ -40,18 +35,54 @@
                           {% endfor %}
                     </div>
                     <div class="col-sm-3 col-md-2 col-lg-4">
-                       <table class="table table-warning">                           
-                           <tbody>
-                           <tr><td><p><strong>Price Details</strong> </p></td></tr>                           
-                           <tr><td><p id="amount">Price: &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Rs.{{amount}}</p></td></tr>
-                           <tr><td><p>Shipping Charge: &nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Rs. 70</p></td></tr>
-                           <tr><td><p id="totalamount">Price( items):&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Rs.{{totalamount}}</p></td></tr>
-
-                           </tbody>
-                       </table>
+                        <table class="table table-warning">
+                            <tbody>
+                            <tr><td><p id="amount">Amount: ₹{{amount}}</p></td></tr>
+                            <tr><td><p>Shipping Charge:  ₹70</p></td></tr>
+                            <tr><td><p id="totalamount">Total Amount:  ₹{{totalamount}}</p></td></tr>
+            
+                            </tbody>
+                        </table>
                         <a href="{% url 'checkout' %}"><button type="submit" class="btn btn-primary">Place Order</button></a>
-
+            
                     </div>
+                    <div class="container-fluid">
+                        <div class="row my-5">
+                            <div class="col-sm-9 col-md-6 col-lg-8">
+                                <h3><strong>Saved For Later</strong></h3><br>
+                                {% comment %} {% for item in items %}
+                                <table class="table table-success">
+                                    <thead>
+                                        <tr>
+                                            <th scope="row"></th>
+                                            <th>Product </th>
+                                            <th>Name</th>
+                                            <th>Quantity </th>
+                                            <th>Price/Kg</th>
+                                        </tr>
+                                    </thead>
+                                <tbody>
+                                        <tr> {% endcomment %}
+                                            <td scope="col"></td>
+                                            <td><img src="{{cart.fruits.image.url}}" height="100" width="210"><br><br>
+                                                <button type="submit" class="bg-dark text-light remove-cart" pid="{{cart.fruits.id}}">Remove</button>
+                                            <td>{{cart.fruits.name}}</td>
+                                            <td><a class="minus-cart btn" type="submit" pid="{{cart.fruits.id}}"><i class="fas fa-minus-square"></i></a>
+                                                {{cart.quantity}} Kg <a class="plus-cart btn"  type="submit" pid="{{cart.fruits.id}}"><i class="fas fa-plus-square"></i></a></td>
+                                            <td>{{cart.fruits.price_per_kg}}</td>
+                                           
+                                            {% if not request.user.is_authenticated %}
+                                                <form action="/add_cart" >
+                                                    {% csrf_token %}
+                                                    <input type="hidden" value="{{detail.id}}" name="pid">
+                                                    <button type="submit" class="btn btn-primary" >Move To Cart</button>
+                                                </form>
+                                            {% endif %}
+                                        </tr>
+                                </tbody>
+                                </table>
+                                  {% comment %} {% endfor %} {% endcomment %}
+                            </div>
 
                 </div>
                 </div>

@@ -31,6 +31,7 @@ urlpatterns = [
     path('detail<int:id>/',views.detail,name='detail'),
     path('add_cart/',views.add_cart,name='add_cart'),
     path('showcart/',views.show_cart,name='showcart'),
+    # path('saveditems/',views.save_for_later,name='saveditems'),
     path('emptycart/',views.show_cart,name='emptycart'),
     path('pluscart/',views.plus_cart,name='pluscart'),
     path('minuscart/',views.minus_cart,name='minuscart'),

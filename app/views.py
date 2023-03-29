@@ -241,3 +241,18 @@ def search(request):
         else:
             return redirect('/')
     return render(request,'home.html') 
+
+# def save_for_later(request):
+#     if request.method == 'GET':
+#         user = request.user
+#         product_id = request.GET.get('pid')
+#         fruit = get_object_or_404(Fruit, id=product_id)
+        
+#         # Create a new SavedProduct object with the selected fruit and the current user
+#         SavedItem.objects.create(fruit=fruit, user=request.user)
+#         items = SavedItem.objects.filter(user=user, fruit=fruit)
+#         # Return a success response
+#         return render(request, 'cart.html', {'saveditems': items})
+#     else:
+#         # Return a bad request error for requests that are not GET.
+#         return JsonResponse({'error': 'Bad request.'}, status=400)

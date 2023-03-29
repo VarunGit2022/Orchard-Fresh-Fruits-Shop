@@ -30,4 +30,4 @@ class Contact(admin.ModelAdmin):
 
 @admin.register(SavedItem)
 class SavedItem(admin.ModelAdmin):
-    list_display = ['id','product','quantity']
+    list_display = ['product','quantity']
