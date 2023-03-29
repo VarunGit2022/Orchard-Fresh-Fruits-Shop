@@ -58,3 +58,16 @@ $('.remove-cart').click(function(){
         }
     })
 })
+
+$(document).on('click','.save-for-later',function(){
+    var id = $(this).attr('pid');
+    for(var i=0;i<cart.length;i++){
+        if(cart[i].fruits.id == id){
+            var item = cart[i];
+            savedItems.push(item);
+            cart.splice(i,1);
+        }
+    }
+    displayCart();
+});
+

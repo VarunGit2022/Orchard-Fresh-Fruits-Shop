@@ -6,6 +6,7 @@ from django.contrib.auth import authenticate,login,logout
 from  .models import*
 from django.db.models import Q
 from django.http import JsonResponse
+import datetime
 # Create your views here.
 def home(request):
     fruits = Fruit.objects.all()
@@ -214,18 +215,18 @@ def profile(request):
 
     return render(request,'profile.html')
 
-def booking(request):
-    user = request.user
-    bookid = request.GET.get('bookid')
-    print(bookid)
-    customer = Customer.objects.get(id=bookid)
-    print(customer)
-    cart = Cart.objects.filter(user=user)
-    for  c in cart:
-        Booking(user=user,customer=customer,product=c.fruits,quantity=c.quantity).save()
+# def booking(request):
+#     user = request.user
+#     bookid = request.GET.get('bookid')
+#     print(bookid)
+#     customer = Customer.objects.get(id=bookid)
+#     print(customer)
+#     cart = Cart.objects.filter(user=user)
+#     for  c in cart:
+#         Booking(user=user,customer=customer,product=c.fruits,quantity=c.quantity).save()
 
-        c.delete()
-    return redirect('/viewbooking/')
+#         c.delete()
+#     return redirect('/viewbooking/')
 
 
 def search(request):

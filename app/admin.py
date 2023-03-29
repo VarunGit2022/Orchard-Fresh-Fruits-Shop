@@ -27,3 +27,7 @@ class Booking(admin.ModelAdmin):
 @admin.register(Contact)
 class Contact(admin.ModelAdmin):
     list_display = ['id','full_name','email','mob_no','message']
+
+@admin.register(SavedItem)
+class SavedItem(admin.ModelAdmin):
+    list_display = ['id','product','quantity']
