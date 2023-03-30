@@ -1,4 +1,4 @@
-from django.shortcuts import render,redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from .forms import SignupForm
 from django.contrib import messages
 from django.contrib.auth.forms import AuthenticationForm
@@ -6,8 +6,30 @@ from django.contrib.auth import authenticate,login,logout
 from  .models import*
 from django.db.models import Q
 from django.http import JsonResponse
-import datetime
+
+
 # Create your views here.
+
+# def move_to_cart(request, saved_item_id):
+#     # Get the saved item to move to the cart
+#     saved_item = get_object_or_404(SavedItem, id=saved_item_id)
+
+#     # Create a new cart item with the product and quantity from the saved item
+#     cart_item = Cart.objects.create(
+#         product=saved_item.product,
+#         cart=request.user.cart,
+#         quantity=saved_item.quantity
+#     )
+
+#     # Delete the saved item from the "save for later" list
+#     saved_item.delete()
+
+#     messages.success(request, f"{cart_item.product.name} has been moved to your cart.", {'moved_item':cart_item})
+
+#     return redirect('cart')
+
+
+
 def home(request):
     fruits = Fruit.objects.all()
     return render(request,'home.html',{'fruits':fruits})
@@ -67,7 +89,7 @@ def user_logout(request):
     return redirect('/')
 
 
-def detail(request,id):
+def detail(request):
     fd = Fruit.objects.get(id=id)
     if request.user.is_authenticated:
         item_already_in_cart = Cart.objects.filter(Q(fruits=fd.id) & Q(user=request.user)).exists()
@@ -89,6 +111,18 @@ def add_cart(request):
 
     return redirect('/login/')
 
+# def move_to_cart(request):
+#     if request.user.is_authenticated:
+#         user = request.user
+#         product_id = request.GET.get('pid')
+#         product = Fruit.objects.get(id=product_id)
+#         Cart(user=user,fruits=product).save()
+
+#         return redirect('/showcart/')
+
+#     return redirect('/login/')
+
+
 def view_booking(request):
     if request.user.is_authenticated:
         data = Booking.objects.filter(user=request.user)
@@ -108,7 +142,7 @@ def show_cart(request):
         #print(cart_product)
         if cart_product:
             for p in cart_product:
-                tempamount = (p.quantity* int(p.fruits.price_per_kg))
+                tempamount = p.quantity* int(p.fruits.price_per_kg)
                 amount += (tempamount)
                 totalamount = amount+shipping_amount
 
@@ -202,16 +236,8 @@ def address(request):
 def profile(request):
     if request.method == 'POST':
         user = request.user
-        nm = request.POST['cname']
-        mob = request.POST['mobno']
-        cit = request.POST['ccity']
-        stat = request.POST['cstate']
-        zi = request.POST['czip']
-        add = request.POST['cAdd']
-        Customer.objects.create(user=user, name=nm, mobile_no=mob, city=cit,state=stat,zipcode=zi,addres_s=add)
         messages.success(request,'Your Address is Succesfully Added')
-        return render(request,'profile.html',{'active':'btn-primary'})
-
+        return render(request,'profile.html',{'active':'btn-primary'}, {'users':user})
 
     return render(request,'profile.html')
 
@@ -236,7 +262,7 @@ def search(request):
         if srch:
             match = Fruit.objects.filter(Q(name__icontains=srch))
             if match:
-                nm = Fruit.objects.get(name)
+                nm = Fruit.objects.get(match.name)
                 return render(request, 'search.html', {'sr': match}, {'nm': nm})
         else:
             return redirect('/')

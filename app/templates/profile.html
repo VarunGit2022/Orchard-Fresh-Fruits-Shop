@@ -1,51 +1,89 @@
-{% extends 'base.html' %}
 {% load static %}
-{% block body %}
- <div class="container-fluid">
-     <div class="row my-5">
-        <div class="col-sm-4 col-md-4 col-lg-4">
-            <h2>Welcome {{user.username}}</h2><br>
-            <h3 class="btn {{active}}">Profile</h3><br>
-            <a href="{% url 'address' %}"><h3>Address</h3></a>
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>My Page</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <style>
+      /* Set height of the grid so that it fills the screen */
+      .row.content {height: 100%}
+      
+      /* Set gray background color and 100% height */
+      .sidenav {
+        background-color: #f1f1f1;
+        height: 100%;
+      }
+      
+      /* On small screens, set height to 'auto' for the grid */
+      @media screen and (max-width: 767px) {
+        .row.content {height:auto;} 
+      }
+    </style>
+  </head>
+  <body>
 
+    <!-- First section -->
+    <div class="container-fluid" style="padding-top: 35px;">
+        <div class="container-fluid" style="padding-left: 80px;">
+      <div class="row">
+        <div class="col-sm-12 col-md-2 sidenav">
+            <div class="container">
+                <div class="img-box" style="display: inline-block;">
+                  <img src="{% static 'images/profile.png' %}" alt="" style="border-radius: 50%; margin-top: 20px;">
+                </div>
+                <br><br>
+                <div class="detail-box" style="display: inline-block;">
+                  <h3><strong>Hello,</strong></h3>
+                  <h5><strong>Varun Kumar</strong></h5>
+                </div>
+              </div>
+              
+          <hr>
+          
+          <button class="btn btn-primary">My Orders</button><br><br>
+          <button class="btn btn-primary">Account Settings</button><br><br>
+          <button class="btn btn-primary">Payments</button><br><br>
+          <button class="btn btn-primary">My Stuff</button><br><br>
+          <button class="btn btn-danger">Logout</button><br><br><br><br><br><br><br><br><br><br><br><br><br>
         </div>
-        <div class="col-sm-8 col-md-4 col-lg-6 ">
-                    {% for message in messages %}
-                        <p class="alert alert-success">{{message}}</p>
-                    {% endfor %}
-                    <form action="" method="post">
-                   {% csrf_token %}
-                  <div class="form-group">
-                    <label for="FirstInput">Name</label>
-                      <input type="text" class="form-control" id="FirstInput" name="cname" placeholder="" value="" contenteditable="true">
-                  </div>
-                  <div class="form-group">
-                    <label for="MobileInput">Mobile No</label>
-                       <input type="text" class="form-control" id="MobileInput" name="mobno" placeholder="" value="" required>
-                  </div>
-                  <div class="form-group">
-                    <label for="StateInput">State</label>
-                       <input type="text" class="form-control" id="StateInput" name="cstate" placeholder="" value="" required>
-                  </div>
-                  <div class="form-group">
-                    <label for="CityInput">City</label>
-                       <input type="text" class="form-control" id="CityInput" name="ccity" placeholder="" value="" required>
-                  </div>
 
-                  <div class="form-group">
-                    <label for="ZipcodeInput">Zip code</label>
-                       <input type="text" class="form-control" id="ZipcodeInput" name="czip" placeholder="" value="" required>
-                  </div>
-                        <div class="form-group">
-                      <label for="AddInput">Address</label>
-                      <textarea class="form-control" id="AddInput" name="cAdd" placeholder="" ></textarea>
-                  </div>
+        <!-- Third section -->
+        <div class="col-sm-12 col-md-8" style="padding-top: 0px;">
+            <div class="col-sm-12 col-md-8" style="padding-left: 40px;">
+          <h4>Personal Information <button type="button" class="btn btn-primary" >Edit</button><br></h4>
+          
+          <form>
+            <div class="form-group">
+              
+              <input type="text" class="form-control" id="first_name" placeholder="Enter first name">
+            </div>
+            <div class="form-group">
+              
+              <input type="text" class="form-control" id="last_name" placeholder="Enter last name">
+            </div>
+            <div class="form-group">
+             
+              <select class="form-control" id="gender">
+                <option>Male</option>
+                <option>Female</option>
+              </select>
+            </div>
+          </form><br><br>
 
-                   <input type="submit" class="btn btn-primary" value="Submit">
-                </form>
-             </div>
+          <h4>Email Address <button type="button" class="btn btn-primary">Edit</button><br></h4>
+          <form>
+            <div class="form-group">
+              <input type="email" class="form-control" id="email" placeholder="Enter email">
+            </div>
+          </form><br><br>
 
-    </div>
-
-</div>
-{% endblock %}
+              
+              <h4>Mobile Number <button type="button" class="btn btn-primary">Edit</button> </h4>
+              <div class="form-group">
+                <input type="tel" class="form-control" id="mobile" value="555-555-5555">
+              </div>

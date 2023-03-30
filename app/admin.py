@@ -12,11 +12,11 @@ class CartAdmin(admin.ModelAdmin):
     list_display = ['id','user','fruits','quantity']
 
 @admin.register(Customer)
-class Customer(admin.ModelAdmin):
-    list_display = ['id','user','name','mobile_no','state','city','addres_s','zipcode']
+class CustomerAdmin(admin.ModelAdmin):
+    list_display = ['id', 'image', 'user', 'mobile_no','gender','mobile_no','email']
 
 @admin.register(Booking)
-class Booking(admin.ModelAdmin):
+class BookingAdmin(admin.ModelAdmin):
     list_display = ['user','customer','product','ordered_date','customer_info','status','quantity']
 
     def customer_info(self,obj):
@@ -25,9 +25,9 @@ class Booking(admin.ModelAdmin):
 
 
 @admin.register(Contact)
-class Contact(admin.ModelAdmin):
+class ContactAdmin(admin.ModelAdmin):
     list_display = ['id','full_name','email','mob_no','message']
 
 @admin.register(SavedItem)
-class SavedItem(admin.ModelAdmin):
+class SavedItemAdmin(admin.ModelAdmin):
     list_display = ['product','quantity']

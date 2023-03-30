@@ -1,6 +1,7 @@
 {% extends 'base.html' %}
 {% load static %}
 {% block body %}
+
 <div class="row">
     <div class="col-sm-12 my-3">
         <h3 class="text-center alert alert-danger"> Shopping Cart</h3>
@@ -22,9 +23,9 @@
                         <tbody>
                                 <tr>
                                     <td scope="col"></td>
-                                    <td><img src="{{cart.fruits.image.url}}" height="100" width="210"><br><br>
-                                        <button type="submit" class="bg-dark text-light remove-cart" pid="{{cart.fruits.id}}">Remove</button>
-                                        <button type="submit" class="bg-dark text-light save-cart" pid="{{cart.fruits.id}}">Save For Later</button></td>
+                                    <td><img src="{{cart.fruits.image.url}}" height="100" width="216"><br><br>
+                                        <button type="submit" class="bg-dark text-light remove-cart" pid="{{cart.fruits.id}}">REMOVE</button>
+                                        <button type="submit" class="bg-dark text-light" pid="{{cart.fruits.id}}">SAVE FOR LATER</button></td>
                                     <td>{{cart.fruits.name}}</td>
                                     <td><a class="minus-cart btn" type="submit" pid="{{cart.fruits.id}}"><i class="fas fa-minus-square"></i></a>
                                         {{cart.quantity}} Kg <a class="plus-cart btn"  type="submit" pid="{{cart.fruits.id}}"><i class="fas fa-plus-square"></i></a></td>
@@ -32,16 +33,37 @@
                                 </tr>
                         </tbody>
                         </table>
-                          {% endfor %}
+                        {% endfor %}
                     </div>
                     <div class="col-sm-3 col-md-2 col-lg-4">
                         <table class="table table-warning">
-                            <tbody>
-                            <tr><td><p id="amount">Amount: ₹{{amount}}</p></td></tr>
-                            <tr><td><p>Shipping Charge:  ₹70</p></td></tr>
-                            <tr><td><p id="totalamount">Total Amount:  ₹{{totalamount}}</p></td></tr>
-            
-                            </tbody>
+                            <thead>
+                                <tr>
+                                    <th scope="row"></th>
+                                    <th>TYPE </th>
+                                    <th>VALUE</th>
+                                </tr>
+                            </thead>
+                        <tbody>
+                                <tr>
+                                    <td scope="col"></td>
+                                    <td>
+                                        <p>AMOUNT</p>
+                                        <p>SHIPPING CHARGE</p>
+                                        <p>TOTAL AMOUNT</p>
+                                    </td>
+
+                                    <td>
+                                            <p>{{amount}}</p>
+                                            <p>70</p>
+                                            <p>{{totalamount}}</p>
+
+                                        
+                                        
+                                    </td>
+                                    
+                                    
+                        </tbody>
                         </table>
                         <a href="{% url 'checkout' %}"><button type="submit" class="btn btn-primary">Place Order</button></a>
             
@@ -50,7 +72,7 @@
                         <div class="row my-5">
                             <div class="col-sm-9 col-md-6 col-lg-8">
                                 <h3><strong>Saved For Later</strong></h3><br>
-                                {% comment %} {% for item in items %}
+                                {% for cart in carts %}
                                 <table class="table table-success">
                                     <thead>
                                         <tr>
@@ -62,33 +84,29 @@
                                         </tr>
                                     </thead>
                                 <tbody>
-                                        <tr> {% endcomment %}
+                                        <tr>
                                             <td scope="col"></td>
-                                            <td><img src="{{cart.fruits.image.url}}" height="100" width="210"><br><br>
-                                                <button type="submit" class="bg-dark text-light remove-cart" pid="{{cart.fruits.id}}">Remove</button>
+                                            <td><img src="{{cart.fruits.image.url}}" height="100" width="230"><br><br>
+                                                <button type="submit" class="bg-dark text-light remove-cart btn-size" pid="{{cart.fruits.id}}">REMOVE</button>
+                                                {% comment %} {% if not request.user.is_authenticated %} {% endcomment %}
+                                                <form action="/add_cart" style="display: inline-block;>
+                                                    {% csrf_token %}
+                                                     <input type="hidden" value="{{detail.id}}" name="pid">
+                                                     <button type="submit" class="btn bg-dark text-light btn-size" >MOVE TO CART</button>
+                                                </form>
+                                            </td>    
+                                                    {% comment %} {% endif %} {% endcomment %}
+                                                {% comment %} <button type="submit" class="bg-dark text-light remove-cart" pid="{{cart.fruits.id}}">MOVE TO CART</button> {% endcomment %}
                                             <td>{{cart.fruits.name}}</td>
                                             <td><a class="minus-cart btn" type="submit" pid="{{cart.fruits.id}}"><i class="fas fa-minus-square"></i></a>
                                                 {{cart.quantity}} Kg <a class="plus-cart btn"  type="submit" pid="{{cart.fruits.id}}"><i class="fas fa-plus-square"></i></a></td>
                                             <td>{{cart.fruits.price_per_kg}}</td>
-                                           
-                                            {% if not request.user.is_authenticated %}
-                                                <form action="/add_cart" >
-                                                    {% csrf_token %}
-                                                    <input type="hidden" value="{{detail.id}}" name="pid">
-                                                    <button type="submit" class="btn btn-primary" >Move To Cart</button>
-                                                </form>
-                                            {% endif %}
                                         </tr>
                                 </tbody>
                                 </table>
-                                  {% comment %} {% endfor %} {% endcomment %}
+                                {% endfor %}
                             </div>
-
                 </div>
                 </div>
-
        </div>
-
-
-
 {% endblock %}
